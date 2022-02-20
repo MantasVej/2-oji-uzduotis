@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <ctime>
 
 using std::cout;
 using std::cin;
@@ -34,45 +35,76 @@ void Mediana(Mokinys& temp) {
     else mediana = temp.C[n / 2];
     temp.galutinis = 0.4 * mediana + 0.6 * temp.egzaminas;
 };
-//Skaito duomenis apie studenta
+//Atsitiktinai generuoja pazymi nuo 1 iki 10
+int Generavimas() {
+    int pazymys;
+    srand(time(NULL));
+    pazymys = rand() % 10 + 1;
+    return pazymys;
+};
+//Perkopijuoja studento pazymius i didesni masyva dinamineje atmintyje
 void Kopijuoti_pazymius(Mokinys& temp) {
     int* kopija = new int[temp.n+1];
     for (int i = 0; i < temp.n; i++) kopija[i] = temp.C[i];
     delete [] temp.C;
     temp.C = kopija;
 }
+//Skaito duomenis apie studenta
 void Ivestis(Mokinys& temp) {
     char paz;
+    char gen;
     bool check;
     temp.C = new int[temp.n+1];
     cout << "Iveskite studento varda: "; cin >> temp.vardas;
     cout << "Iveskite studento pavarde: "; cin >> temp.pavarde;
     do {
-        cout << "Iveskite " << temp.n + 1<< "-a pazymi: ";
-            while (!(cin >> temp.C[temp.n])) {
-            cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            cout << "Iveskite " << temp.n + 1 << "-a pazymi: ";
-        }
-            do {
-                cout << "Ar norite ivesti kita pazymi (t/n)? "; cin >> paz;
-                check = 1;
-                if (paz == 'n') break;
-                else if (paz == 't') {
-                    temp.n++;
-                    Kopijuoti_pazymius(temp);
+        do {
+            cout << "Ar " << temp.n + 1 << " studento pazymi generuoti atsitiktinai (t/n)? "; cin >> gen;
+            check = 1;
+            if (gen == 'n') {
+                cout << "Iveskite " << temp.n + 1 << "-a pazymi: ";
+                while (!(cin >> temp.C[temp.n])) {
+                    cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    cout << "Iveskite " << temp.n + 1 << "-a pazymi: ";
                 }
-                else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
-            } while (!check);
+            }
+            else if (gen == 't') {
+                temp.C[temp.n] = Generavimas();
+                cout << temp.n + 1 << "-as pazymys yra " << temp.C[temp.n] << endl;
+            }
+            else { cout << "Neteisinga ivestis. Bandykite dar karta " << endl; check = 0; }
+        } while (!check);
+        do {
+            cout << "Ar dar yra pazymiu (t/n)? "; cin >> paz;
+            check = 1;
+            if (paz == 'n') break;
+            else if (paz == 't') {
+                temp.n++;
+                Kopijuoti_pazymius(temp);
+            }
+            else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+        } while (!check);
     } while (paz == 't');
-    cout << "Iveskite egzamino rezultata: ";
-    while (!(cin >> temp.egzaminas)) {
-            cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
+    do {
+        cout << "Ar studento egzamino rezultata generuoti atsitiktinai (t/n)? "; cin >> gen;
+        check = 1;
+        if (gen == 'n') {
             cout << "Iveskite egzamino rezultata: ";
-    };
+            while (!(cin >> temp.egzaminas)) {
+                cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Iveskite egzamino rezultata: ";
+            };
+        }
+        else if (gen == 't') {
+            temp.egzaminas = Generavimas();
+            cout << "Egzamino pazymys yra " << temp.egzaminas << endl;
+        }
+        else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+    } while (!check);
 }
 //Isveda rezultatus
 void Isvestis(Mokinys& temp, char rez) {
@@ -80,7 +112,7 @@ void Isvestis(Mokinys& temp, char rez) {
     else Mediana(temp);
     cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
 }
-//Perkopijuoja studentu duomenis i kita masyva dinamineje atmintyje
+//Perkopijuoja studentu duomenis i didesni masyva dinamineje atmintyje
 void Kopijuoti(Mokinys*& temp, int dydis) {
     Mokinys* kopija = new Mokinys[dydis];
     for (int i = 0; i < dydis - 1; i++)
