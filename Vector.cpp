@@ -128,6 +128,10 @@ void Skaitymas(vector<Mokinys>& mas) {
     }
     fd.close();
 }
+void Rikiavimas(vector<Mokinys>& mas) {
+    for (int i = 0; i < S; i++)
+        for (int j = i + 1; j < S; j++) if (mas[i].vardas > mas[j].vardas) std::swap(mas[i], mas[j]);
+}
 void Isvedimas(vector<Mokinys>& mas) {
     cout << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
     cout << "-----------------------------------------------------------------" << endl;
@@ -151,6 +155,7 @@ int main()
         check = 1;
         if (duom == 't') {
             Skaitymas(mas);
+            Rikiavimas(mas);
             Isvedimas(mas);
         }
         else if (duom == 'n') {
