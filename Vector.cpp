@@ -128,6 +128,16 @@ void Skaitymas(vector<Mokinys>& mas) {
     }
     fd.close();
 }
+void Isvedimas(vector<Mokinys>& mas) {
+    cout << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
+    cout << "-----------------------------------------------------------------" << endl;
+    for (int i = 0; i < S; i++) {
+        Vidurkis(mas[i]);
+        cout << left << setw(15) << mas[i].vardas << left << setw(15) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis;
+        Mediana(mas[i]);
+        cout << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
+    };
+}
 int main()
 {
     int n = 1;
@@ -141,6 +151,7 @@ int main()
         check = 1;
         if (duom == 't') {
             Skaitymas(mas);
+            Isvedimas(mas);
         }
         else if (duom == 'n') {
             for (int i = 0; i < n; i++) {
