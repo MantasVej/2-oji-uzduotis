@@ -1,0 +1,11 @@
+Vardas              Pavarde                    ND1     ND2     ND3     ND4     ND5     Egz.
+Tomas               Kazlauskas                 10      7       5       8       0       6
+Vilius              Petrauskas                 2       3       4       7       5       4
+Laura               Jankauskaite               9       7       4       8       10      9
+Gintas              Balciunas                  2       3       5       0       0       3
+Liepa               Savickaite                 8       4       1       8       10      5
+Rokas               Kavaliauskas               2       4       7       6       6       6
+Lukas               Kairys                     1       7       4       0       2       7
+Arnas               Adomaitis                  0       10      7       4       5       2
+Agne                Vasiliauskaite             5       6       2       0       1       9
+Rita                Navickaite                 4       7       8       9       8       10

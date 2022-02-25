@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <iomanip>
 #include <ctime>
@@ -13,9 +14,9 @@ using std::setw;
 using std::endl;
 using std::vector;
 
-const char CDfv[] = "studentai10000.txt";
-const int S = 10000; //studentu skaicius
-const int P = 15; //pazymiu skaicius
+const char CDfv[] = "kursiokai.txt";
+const int S = 10; //studentu skaicius
+const int P = 5; //pazymiu skaicius
 
 struct Mokinys
 {
@@ -110,43 +111,66 @@ void Isvestis(Mokinys& temp, char stud) {
     else Mediana(temp);
     cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
 }
+void Skaitymas(vector<Mokinys>& mas) {
+    int paz;
+    mas.reserve(S);
+    std::ifstream fd(CDfv);
+    fd.ignore(10000, '\n');
+    for (int i = 0; i < S; i++) {
+        fd >> mas[i].vardas >> mas[i].pavarde;
+        for (int j = 0; j < P; j++) {
+            fd >> paz;
+            mas[i].v.push_back(paz);
+        }
+        fd >> mas[i].egzaminas;
+        mas[i].n = P - 1;
+        mas.push_back(Mokinys());
+    }
+    fd.close();
+}
 int main()
 {
     int n = 1;
     vector<Mokinys> mas;
     mas.push_back(Mokinys());
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
+    char duom;
     char stud;
-    cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> stud;
-    if (stud == 't') {
-
-    }
-    else if (stud == 'n') {
-        for (int i = 0; i < n; i++) {
-            Ivestis(mas[i]);
+    do {
+        cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
+        check = 1;
+        if (duom == 't') {
+            Skaitymas(mas);
+        }
+        else if (duom == 'n') {
+            for (int i = 0; i < n; i++) {
+                Ivestis(mas[i]);
+                do {
+                    cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
+                    check = 1;
+                    if (stud == 't') {
+                        n++;
+                        mas.push_back(Mokinys());
+                    }
+                    else if (stud == 'n') break;
+                    else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+                } while (!check);
+            }
             do {
-                cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
+                cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
                 check = 1;
-                if (stud == 't') {
-                    n++;
-                    mas.push_back(Mokinys());
-                }
-                else if (stud == 'n') break;
+                if (stud == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
+                else if (stud == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
                 else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
             } while (!check);
+
+            cout << "---------------------------------------------" << endl;
+            for (int i = 0; i < n; i++) {
+                Isvestis(mas[i], stud);
+            }
+            cout << "---------------------------------------------" << endl;
         }
-        do {
-            cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
-            check = 1;
-            if (stud == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
-            else if (stud == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
-            else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
-        } while (!check);
-    }
-    cout << "---------------------------------------------" << endl;
-    for (int i = 0; i < n; i++) {
-        Isvestis(mas[i], stud);
-    }
-    cout << "---------------------------------------------" << endl;
+        else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+    } while (!check);
     return 0;
 }
