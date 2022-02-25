@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <ctime>
 #include <vector>
+#include <random>
 
 using std::cout;
 using std::cin;
@@ -11,6 +12,10 @@ using std::left;
 using std::setw;
 using std::endl;
 using std::vector;
+
+const char CDfv[] = "studentai10000.txt";
+const int S = 10000; //studentu skaicius
+const int P = 15; //pazymiu skaicius
 
 struct Mokinys
 {
@@ -39,10 +44,10 @@ void Mediana(Mokinys& temp) {
 };
 //Atsitiktinai generuoja pazymi nuo 1 iki 10
 int Generavimas() {
-    int pazymys;
-    srand(time(NULL));
-    pazymys = rand() % 10 + 1;
-    return pazymys;
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 10);
+    return dist(mt);
 };
 //Skaito duomenis apie studenta
 void Ivestis(Mokinys& temp) {
@@ -100,51 +105,48 @@ void Ivestis(Mokinys& temp) {
     } while (!check);
 }
 //Isveda rezultatus
-void Isvestis(Mokinys& temp, char rez) {
-    if (rez == 'v') Vidurkis(temp);
+void Isvestis(Mokinys& temp, char stud) {
+    if (stud == 'v') Vidurkis(temp);
     else Mediana(temp);
     cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
 }
-//Perkopijuoja studentu duomenis i didesni masyva dinamineje atmintyje
-void Kopijuoti(Mokinys*& temp, int dydis) {
-    Mokinys* kopija = new Mokinys[dydis];
-    for (int i = 0; i < dydis - 1; i++)
-        kopija[i] = temp[i];
-    delete[] temp;
-    temp = kopija;
-}
 int main()
 {
-    int dydis = 1; //pradinis studentu skaicius
-    Mokinys* mas = new Mokinys[dydis];
+    int n = 1;
+    vector<Mokinys> mas;
+    mas.push_back(Mokinys());
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
     char stud;
-    char rez;
-    for (int i = 0; i < dydis; i++) {
-        Ivestis(mas[i]);
+    cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> stud;
+    if (stud == 't') {
+
+    }
+    else if (stud == 'n') {
+        for (int i = 0; i < n; i++) {
+            Ivestis(mas[i]);
+            do {
+                cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
+                check = 1;
+                if (stud == 't') {
+                    n++;
+                    mas.push_back(Mokinys());
+                }
+                else if (stud == 'n') break;
+                else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+            } while (!check);
+        }
         do {
-            cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
+            cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
             check = 1;
-            if (stud == 't') {
-                dydis++;
-                Kopijuoti(mas, dydis);
-            }
-            else if (stud == 'n');
+            if (stud == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
+            else if (stud == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
             else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
         } while (!check);
     }
-    do {
-        cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> rez;
-        check = 1;
-        if (rez == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
-        else if (rez == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
-        else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
-    } while (!check);
     cout << "---------------------------------------------" << endl;
-    for (int i = 0; i < dydis; i++) {
-        Isvestis(mas[i], rez);
+    for (int i = 0; i < n; i++) {
+        Isvestis(mas[i], stud);
     }
     cout << "---------------------------------------------" << endl;
-    delete[] mas;
     return 0;
 }
