@@ -5,3 +5,9 @@ Programos versija v0.1
 2. Realizuota galimybė prieš įvedant pažymį pasirinkti, kad jis būtų sugeneruotas atsitiktinai.
 3. Programa suskaičiuoja galutinius studentų rezultatus pasirinktinai pagal vidurkį arba medianą ir išveda į lentelę.
 4. Versija Array.cpp studentų pažymius saugo C tipo masyve, o Vector.cpp - std::vector tipo konteineryje.
+
+Programos versija v0.2
+
+1. Patobulinta atsitiktinių skaičių generacja. Šioje versijoje naudojama random_device.
+3. Yra galimybė studentų duomenis skaityti iš failo. Šiuo tikslu iš anksto įvedamas failo pavadinimas, studentų skaičius S ir pažymių skaičius P.
+4. Duomenys rikiuojami pagal studentų vardus, o rezultatai pagal pažymių vidurkį ir medianą išvedami į lentelę.
