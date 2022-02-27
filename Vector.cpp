@@ -128,10 +128,6 @@ void Skaitymas(vector<Mokinys>& mas) {
     }
     fd.close();
 }
-void Rikiavimas(vector<Mokinys>& mas) {
-    for (int i = 0; i < S; i++)
-        for (int j = i + 1; j < S; j++) if (mas[i].vardas > mas[j].vardas) std::swap(mas[i], mas[j]);
-}
 void Isvedimas(vector<Mokinys>& mas) {
     cout << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
     cout << "-----------------------------------------------------------------" << endl;
@@ -141,6 +137,9 @@ void Isvedimas(vector<Mokinys>& mas) {
         Mediana(mas[i]);
         cout << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
     };
+}
+bool Palyginti(Mokinys a, Mokinys b) {
+    return a.vardas < b.vardas;
 }
 int main()
 {
@@ -155,7 +154,7 @@ int main()
         check = 1;
         if (duom == 't') {
             Skaitymas(mas);
-            Rikiavimas(mas);
+            std::sort(mas.begin(), mas.end()-1, Palyginti);
             Isvedimas(mas);
         }
         else if (duom == 'n') {
