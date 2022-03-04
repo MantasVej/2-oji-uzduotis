@@ -16,8 +16,7 @@ using std::endl;
 using std::vector;
 
 const char CDfv[] = "kursiokai.txt";
-const int S = 10; //studentu skaicius
-const int P = 5; //pazymiu skaicius
+const char CRfv[] = "rezultatai.txt";
 
 struct Mokinys
 {
@@ -159,18 +158,23 @@ void Skaitymas(vector<Mokinys>& mas, int & i) {
         else break;
     }
 }
-void Isvedimas(vector<Mokinys>& mas, int n) {
-    cout << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
-    cout << "-----------------------------------------------------------------" << endl;
-    for (int i = 0; i < n; i++) {
-        Vidurkis(mas[i]);
-        cout << left << setw(15) << mas[i].vardas << left << setw(15) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis;
-        Mediana(mas[i]);
-        cout << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
-    };
-}
 bool Palyginti(Mokinys a, Mokinys b) {
     return a.vardas < b.vardas;
+}
+void Isvedimas(vector<Mokinys>& mas, int n) {
+    std:: ofstream fr(CRfv);
+    std::sort(mas.begin(), mas.end() - 1, Palyginti);
+    std::stringstream my_buffer;
+    my_buffer << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
+    my_buffer << "-----------------------------------------------------------------" << endl;
+    for (int i = 0; i < n; i++) {
+        Vidurkis(mas[i]);
+        my_buffer << left << setw(15) << mas[i].vardas << left << setw(15) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis;
+        Mediana(mas[i]);
+        my_buffer << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
+    };
+    fr << my_buffer.str();
+    fr.close();
 }
 int main()
 {
@@ -185,7 +189,6 @@ int main()
         check = 1;
         if (duom == 't') {
             Skaitymas(mas, n);
-            std::sort(mas.begin(), mas.end()-1, Palyginti);
             Isvedimas(mas, n);
         }
         else if (duom == 'n') {
