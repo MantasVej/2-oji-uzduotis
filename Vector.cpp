@@ -5,6 +5,7 @@
 #include <ctime>
 #include <vector>
 #include <random>
+#include <sstream> 
 
 using std::cout;
 using std::cin;
@@ -30,12 +31,12 @@ struct Mokinys
 //Skaiciuoja galutini pazymi pagal vidurki
 void Vidurkis(Mokinys& temp) {
     double sum = 0; //pazymiu suma
-    for (int i = 0; i < temp.n + 1; i++) sum += temp.v[i];
-    temp.galutinis = 0.4 * (sum / (temp.n + 1)) + 0.6 * temp.egzaminas;
+    for (int i = 0; i < temp.n; i++) sum += temp.v[i];
+    temp.galutinis = 0.4 * (sum / (temp.n)) + 0.6 * temp.egzaminas;
 };
 //Skaiciuoja galutini pazymi pagal mediana
 void Mediana(Mokinys& temp) {
-    int n = temp.n + 1;
+    int n = temp.n;
     double mediana = 0; //pazymiu mediana
     for (int i = 0; i < n; i++)
         for (int j = i + 1; j < n; j++) if (temp.v[i] > temp.v[j]) std::swap(temp.v[i], temp.v[j]);
@@ -81,7 +82,7 @@ void Ivestis(Mokinys& temp) {
         do {
             cout << "Ar dar yra pazymiu (t/n)? "; cin >> paz;
             check = 1;
-            if (paz == 'n') break;
+            if (paz == 'n') {temp.n++; break;}
             else if (paz == 't') temp.n++;
             else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
         } while (!check);
@@ -111,27 +112,57 @@ void Isvestis(Mokinys& temp, char stud) {
     else Mediana(temp);
     cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
 }
-void Skaitymas(vector<Mokinys>& mas) {
-    int paz;
-    mas.reserve(S);
-    std::ifstream fd(CDfv);
-    fd.ignore(10000, '\n');
-    for (int i = 0; i < S; i++) {
-        fd >> mas[i].vardas >> mas[i].pavarde;
-        for (int j = 0; j < P; j++) {
-            fd >> paz;
-            mas[i].v.push_back(paz);
-        }
-        fd >> mas[i].egzaminas;
-        mas[i].n = P - 1;
-        mas.push_back(Mokinys());
+//Skaiciuoja kiek string eiluteje yra tarpu
+int Tarpai(string eil) {
+    int tarpai = 0;
+    for (int i = 0; eil[i] != '\0'; ++i)
+    {
+        if ((eil[i] == ' ') && (eil[i - 1] != ' '))
+            tarpai++;
     }
-    fd.close();
+    return tarpai;
 }
-void Isvedimas(vector<Mokinys>& mas) {
+void Skaitymas(vector<Mokinys>& mas, int & i) {
+    mas.reserve(1000000);
+    i = 0; //studentu skaicius
+
+    string eil;
+    std::stringstream my_buffer;
+
+    std::ifstream fd(CDfv);
+    my_buffer << fd.rdbuf();
+    fd.close();
+
+    bool sk = 1;
+    int paz;
+    int n = 0; //pazymiu skaicius
+    while (my_buffer) {
+        if (!my_buffer.eof()) {
+            std::getline(my_buffer, eil);
+            if (sk == 1) {
+                n = Tarpai(eil) - 2;
+                sk = 0;
+            }
+            else {
+                std::stringstream s(eil);
+                s >> mas[i].vardas >> mas[i].pavarde;
+                for (int j = 0; j < n; j++) {
+                    s >> paz;
+                    mas[i].v.push_back(paz);
+                }
+                s >> mas[i].egzaminas;
+                mas[i].n = n;
+                mas.push_back(Mokinys());
+                i++;
+            }
+        }
+        else break;
+    }
+}
+void Isvedimas(vector<Mokinys>& mas, int n) {
     cout << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
     cout << "-----------------------------------------------------------------" << endl;
-    for (int i = 0; i < S; i++) {
+    for (int i = 0; i < n; i++) {
         Vidurkis(mas[i]);
         cout << left << setw(15) << mas[i].vardas << left << setw(15) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis;
         Mediana(mas[i]);
@@ -153,9 +184,9 @@ int main()
         cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
         check = 1;
         if (duom == 't') {
-            Skaitymas(mas);
+            Skaitymas(mas, n);
             std::sort(mas.begin(), mas.end()-1, Palyginti);
-            Isvedimas(mas);
+            Isvedimas(mas, n);
         }
         else if (duom == 'n') {
             for (int i = 0; i < n; i++) {
