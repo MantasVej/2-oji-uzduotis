@@ -10,4 +10,5 @@ Programos versija v0.2
 
 1. Patobulinta atsitiktinių skaičių generacja. Šioje versijoje naudojama random_device.
 3. Yra galimybė studentų duomenis skaityti iš failo. Nuskaitymas veikia su bet kokio dydžio duomenų failais.
-4. Duomenys rikiuojami pagal studentų vardus, o rezultatai pagal pažymių vidurkį ir medianą išvedami į lentelę.
+4. Duomenys rikiuojami pagal studentų vardus.
+5. Rezultatai įrašomi į faillą rezultatai.txt.
