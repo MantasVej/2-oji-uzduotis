@@ -9,5 +9,5 @@ Programos versija v0.1
 Programos versija v0.2
 
 1. Patobulinta atsitiktinių skaičių generacja. Šioje versijoje naudojama random_device.
-3. Yra galimybė studentų duomenis skaityti iš failo. Šiuo tikslu iš anksto įvedamas failo pavadinimas, studentų skaičius S ir pažymių skaičius P.
+3. Yra galimybė studentų duomenis skaityti iš failo. Nuskaitymas veikia su bet kokio dydžio duomenų failais.
 4. Duomenys rikiuojami pagal studentų vardus, o rezultatai pagal pažymių vidurkį ir medianą išvedami į lentelę.
