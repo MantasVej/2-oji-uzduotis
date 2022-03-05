@@ -1,7 +1,6 @@
 #include "Header.h"
 #include "Struktura.h"
 
-<<<<<<< Updated upstream
 void Studentai(vector<Mokinys>& mas) {
     int n = 1;
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
@@ -194,12 +193,3 @@ void Isvedimas(vector<Mokinys>& mas, int n) {
     fr << my_buffer.str();
     fr.close();
 }
-=======
-int main()
-{
-    vector<Mokinys> mas;
-    mas.push_back(Mokinys());
-    Studentai(mas);
-    return 0;
-}
->>>>>>> Stashed changes
