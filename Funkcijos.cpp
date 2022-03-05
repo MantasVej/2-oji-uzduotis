@@ -145,9 +145,8 @@ void Skaitymas(vector<Mokinys>& mas, int& i) {
     string eil;
     std::stringstream my_buffer;
 
-    std::ifstream fd;
     try {
-        fd.open(CDfv);
+        std::ifstream fd(CDfv);
         fd.exceptions(std::ifstream::failbit);
         my_buffer << fd.rdbuf();
         fd.close();
