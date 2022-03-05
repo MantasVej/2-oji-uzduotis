@@ -1,7 +1,6 @@
 #include "Header.h"
 #include "Struktura.h"
 
-=======
 int main()
 {
     vector<Mokinys> mas;
