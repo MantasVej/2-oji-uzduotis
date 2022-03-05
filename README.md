@@ -12,3 +12,9 @@ Programos versija v0.2
 3. Yra galimybė studentų duomenis skaityti iš failo. Nuskaitymas veikia su bet kokio dydžio duomenų failais.
 4. Duomenys rikiuojami pagal studentų vardus.
 5. Rezultatai įrašomi į faillą rezultatai.txt.
+
+Programos versija v0.3
+
+1. Šioje versijoje programos antraštės ir struktūros perkeltos į failus Header.h ir Struktura.h.
+2. Į failą Funkcijos.cpp buvo perkeltos visos funkcijos iš failo Source.cpp.
+3. Patikrinti ar egzistuoja duomenų failas naudojama exception handling (try, catch).
