@@ -145,10 +145,16 @@ void Skaitymas(vector<Mokinys>& mas, int& i) {
     string eil;
     std::stringstream my_buffer;
 
-    std::ifstream fd(CDfv);
-    my_buffer << fd.rdbuf();
-    fd.close();
-
+    std::ifstream fd;
+    try {
+        fd.open(CDfv);
+        fd.exceptions(std::ifstream::failbit);
+        my_buffer << fd.rdbuf();
+        fd.close();
+    }
+    catch(std::exception& e) {
+        cout << "Toks duomenu failas neegzistuoja.";
+    }
     bool sk = 1;
     int paz;
     int n = 0; //pazymiu skaicius

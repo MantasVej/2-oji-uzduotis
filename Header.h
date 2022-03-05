@@ -7,6 +7,7 @@
 #include <vector>
 #include <random>
 #include <sstream>
+#include <exception>
 #include "Struktura.h"
 
 using std::cout;
