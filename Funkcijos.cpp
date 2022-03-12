@@ -3,46 +3,60 @@
 
 void Studentai(vector<Mokinys>& mas) {
     int n = 1;
+    int paz;
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
     char duom;
     char stud;
+    int s = 1000; //studentu skaiciu duomenu failui generuoti
     do {
-        cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
+        cout << "Ar generuoti nauja studentu duomenu faila? (t/n)? "; cin >> duom;
         check = 1;
         if (duom == 't') {
-            Skaitymas(mas, n);
-            Isvedimas(mas, n);
+            cout << "Kiek studentai turi pazymiu? "; cin >> paz;
+            FailoGeneravimas(s, paz);
         }
-        else if (duom == 'n') {
-            for (int i = 0; i < n; i++) {
-                Ivestis(mas[i]);
-                do {
-                    cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
-                    check = 1;
-                    if (stud == 't') {
-                        n++;
-                        mas.push_back(Mokinys());
-                    }
-                    else if (stud == 'n') break;
-                    else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
-                } while (!check);
-            }
-            do {
-                cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
-                check = 1;
-                if (stud == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
-                else if (stud == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
-                else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
-            } while (!check);
-
-            cout << "---------------------------------------------" << endl;
-            for (int i = 0; i < n; i++) {
-                Isvestis(mas[i], stud);
-            }
-            cout << "---------------------------------------------" << endl;
-        }
+        else if (duom == 'n') break;
         else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
     } while (!check);
+    if (duom == 'n') {
+        do {
+            cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
+            check = 1;
+            if (duom == 't') {
+                Skaitymas(mas, n);
+                Isvedimas(mas, n);
+            }
+            else if (duom == 'n') {
+                for (int i = 0; i < n; i++) {
+                    Ivestis(mas[i]);
+                    do {
+                        cout << "Ar norite ivesti kita studenta (t/n)? "; cin >> stud;
+                        check = 1;
+                        if (stud == 't') {
+                            n++;
+                            mas.push_back(Mokinys());
+                        }
+                        else if (stud == 'n') break;
+                        else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+                    } while (!check);
+                }
+                do {
+                    cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
+                    check = 1;
+                    if (stud == 'v') cout << "Vardas         Pavarde        Galutinis(vid.)" << endl;
+                    else if (stud == 'm') cout << "Vardas         Pavarde        Galutinis(med.)" << endl;
+                    else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+                } while (!check);
+
+                cout << "---------------------------------------------" << endl;
+                for (int i = 0; i < n; i++) {
+                    Isvestis(mas[i], stud);
+                }
+                cout << "---------------------------------------------" << endl;
+            }
+            else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
+        } while (!check);
+    }
 }
 //Skaiciuoja galutini pazymi pagal vidurki
 void Vidurkis(Mokinys& temp) {
@@ -195,6 +209,21 @@ void Isvedimas(vector<Mokinys>& mas, int n) {
         Mediana(mas[i]);
         my_buffer << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
     };
+    fr << my_buffer.str();
+    fr.close();
+}
+void FailoGeneravimas(int n, int paz) {
+    string failas = "studentai" + std::to_string(n) + ".txt";
+    std::ofstream fr(failas);
+    std::stringstream my_buffer;
+    my_buffer << left << setw(20) << "Vardas" << left << setw(20) << "Pavarde";
+    for (int i = 0; i < paz; i++) my_buffer << "ND" << left << setw(6) << std::to_string(i + 1);
+    my_buffer << "Egz." << endl;
+    for (int i = 0; i < n; i++) {
+        my_buffer << "Vardas" << left << setw(14) << std::to_string(i + 1)  << "Pavarde" << left << setw(13) << std::to_string(i + 1);
+        for (int j = 0; j <= paz; j++) my_buffer << left << setw(8) << Generavimas();
+        my_buffer << endl;
+    }
     fr << my_buffer.str();
     fr.close();
 }

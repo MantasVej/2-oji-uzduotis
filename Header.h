@@ -29,3 +29,4 @@ int Tarpai(string eil);
 void Skaitymas(vector<Mokinys>&, int&);
 bool Palyginti(Mokinys, Mokinys);
 void Isvedimas(vector<Mokinys>&, int);
+void FailoGeneravimas(int, int);
