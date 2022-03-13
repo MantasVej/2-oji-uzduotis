@@ -16,7 +16,7 @@ using std::left;
 using std::setw;
 using std::endl;
 
-const char CDfv[] = "kursiokai.txt";
+const char CDfv[] = "studentai1000.txt";
 const char CRfv[] = "rezultatai.txt";
 
 void Studentai(vector<Mokinys>&);
@@ -26,7 +26,8 @@ int Generavimas();
 void Ivestis(Mokinys&);
 void Isvestis(Mokinys&, char);
 int Tarpai(string eil);
-void Skaitymas(vector<Mokinys>&, int&);
+void Skaitymas(vector<Mokinys>&, int&, string);
 bool Palyginti(Mokinys, Mokinys);
-void Isvedimas(vector<Mokinys>&, int);
-void FailoGeneravimas(int, int);
+void Isvedimas(vector<Mokinys>&, int, string);
+void FailoGeneravimas(int, int, string&);
+void Rusiavimas(vector<Mokinys>&, int, char);

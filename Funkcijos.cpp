@@ -7,13 +7,17 @@ void Studentai(vector<Mokinys>& mas) {
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
     char duom;
     char stud;
-    int s = 1000; //studentu skaiciu duomenu failui generuoti
+    string failas;
+    int s = 1000000; //studentu skaiciu duomenu failui generuoti
     do {
         cout << "Ar generuoti nauja studentu duomenu faila? (t/n)? "; cin >> duom;
         check = 1;
         if (duom == 't') {
             cout << "Kiek studentai turi pazymiu? "; cin >> paz;
-            FailoGeneravimas(s, paz);
+            cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
+            FailoGeneravimas(s, paz, failas);
+            Skaitymas(mas, n, failas);
+            Rusiavimas(mas, s, stud);
         }
         else if (duom == 'n') break;
         else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
@@ -23,8 +27,8 @@ void Studentai(vector<Mokinys>& mas) {
             cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
             check = 1;
             if (duom == 't') {
-                Skaitymas(mas, n);
-                Isvedimas(mas, n);
+                Skaitymas(mas, n, CDfv);
+                Isvedimas(mas, n, CRfv);
             }
             else if (duom == 'n') {
                 for (int i = 0; i < n; i++) {
@@ -152,15 +156,15 @@ int Tarpai(string eil) {
     }
     return tarpai;
 }
-void Skaitymas(vector<Mokinys>& mas, int& i) {
-    mas.reserve(1000000);
+void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
+    mas.reserve(10000000);
     i = 0; //studentu skaicius
 
     string eil;
     std::stringstream my_buffer;
 
     try {
-        std::ifstream fd(CDfv);
+        std::ifstream fd(failas);
         fd.exceptions(std::ifstream::failbit);
         my_buffer << fd.rdbuf();
         fd.close();
@@ -197,8 +201,8 @@ void Skaitymas(vector<Mokinys>& mas, int& i) {
 bool Palyginti(Mokinys a, Mokinys b) {
     return a.vardas < b.vardas;
 }
-void Isvedimas(vector<Mokinys>& mas, int n) {
-    std::ofstream fr(CRfv);
+void Isvedimas(vector<Mokinys>& mas, int n, string failas) {
+    std::ofstream fr(failas);
     std::sort(mas.begin(), mas.end() - 1, Palyginti);
     std::stringstream my_buffer;
     my_buffer << "Vardas         Pavarde        Galutinis(vid.)     Galutinis(med.)" << endl;
@@ -212,18 +216,41 @@ void Isvedimas(vector<Mokinys>& mas, int n) {
     fr << my_buffer.str();
     fr.close();
 }
-void FailoGeneravimas(int n, int paz) {
-    string failas = "studentai" + std::to_string(n) + ".txt";
+void FailoGeneravimas(int n, int paz, string & failas) {
+    failas = "studentai" + std::to_string(n) + ".txt";
     std::ofstream fr(failas);
     std::stringstream my_buffer;
     my_buffer << left << setw(20) << "Vardas" << left << setw(20) << "Pavarde";
     for (int i = 0; i < paz; i++) my_buffer << "ND" << left << setw(6) << std::to_string(i + 1);
     my_buffer << "Egz." << endl;
     for (int i = 0; i < n; i++) {
+        if(i != 0) my_buffer << endl;
         my_buffer << "Vardas" << left << setw(14) << std::to_string(i + 1)  << "Pavarde" << left << setw(13) << std::to_string(i + 1);
         for (int j = 0; j <= paz; j++) my_buffer << left << setw(8) << Generavimas();
-        my_buffer << endl;
     }
     fr << my_buffer.str();
     fr.close();
+}
+void Rusiavimas(vector<Mokinys>& mas, int n, char galutinis)
+{
+    string failas1 = "vargsiukai" + std::to_string(n) + ".txt";
+    string failas2 = "galvociai" + std::to_string(n) + ".txt";
+    std::ofstream fr1(failas1);
+    std::ofstream fr2(failas2);
+    std::stringstream vargsiukai;
+    std::stringstream galvociai;
+    vargsiukai << "Vardas              Pavarde             Galutinis" << endl;
+    vargsiukai << "-------------------------------------------------" << endl;
+    galvociai << "Vardas              Pavarde             Galutinis" << endl;
+    galvociai << "-------------------------------------------------" << endl;
+    for(int i = 0; i < n; i++){
+        if (galutinis == 'v') Vidurkis(mas[i]);
+        else Mediana(mas[i]);
+        if(mas[i].galutinis < 5) vargsiukai << left << setw(20) << mas[i].vardas << left << setw(20) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
+        else galvociai << left << setw(20) << mas[i].vardas << left << setw(20) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << endl;
+    }
+    fr1 << vargsiukai.str();
+    fr2 << galvociai.str();
+    fr1.close();
+    fr2.close();
 }
