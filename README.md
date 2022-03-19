@@ -18,3 +18,12 @@ Programos versija v0.3
 1. Šioje versijoje programos antraštės ir struktūros perkeltos į failus Header.h ir Struktura.h.
 2. Į failą Funkcijos.cpp buvo perkeltos visos funkcijos iš failo Source.cpp.
 3. Patikrinti ar egzistuoja duomenų failas naudojama exception handling (try, catch).
+
+Programos versija v0.4
+
+1. Šioje versijoje padarytas duomenų failų generatorius.
+2. Studentai yra išrūšiuojami į du failus: "galvociai.txt" (jei gal. balas >= 5.0) ir "vargsiukai.txt" (jei gal. balas < 5.0)
+3. Atliekama programos veikimo greičio analizė.
+
+![image](https://user-images.githubusercontent.com/92882227/159137619-271a8522-7fa0-4961-b2ad-71b224a613d7.png)
+
