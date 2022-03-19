@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <ctime>
 #include <vector>
+#include <chrono>
 #include <random>
 #include <sstream>
 #include <exception>
@@ -15,9 +16,11 @@ using std::cin;
 using std::left;
 using std::setw;
 using std::endl;
+using std::mt19937;
 
-const char CDfv[] = "studentai1000.txt";
-const char CRfv[] = "rezultatai.txt";
+
+using hrClock = std::chrono::high_resolution_clock;
+typedef std::uniform_int_distribution<int>  int_distribution;
 
 void Studentai(vector<Mokinys>&);
 void Vidurkis(Mokinys&);
@@ -27,7 +30,5 @@ void Ivestis(Mokinys&);
 void Isvestis(Mokinys&, char);
 int Tarpai(string eil);
 void Skaitymas(vector<Mokinys>&, int&, string);
-bool Palyginti(Mokinys, Mokinys);
-void Isvedimas(vector<Mokinys>&, int, string);
 void FailoGeneravimas(int, int, string&);
 void Rusiavimas(vector<Mokinys>&, int, char);
