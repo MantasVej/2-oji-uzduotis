@@ -30,7 +30,7 @@ Programos versija v0.4
 Programos versija v0.5
 1. Šioje versijoje yra 3 programos, kurios studentų duomenis saugo vector, list ir deque tipo konteineriuose.
 
-Programų darbo laikai dirbant su skirtingo tipo kenteineriais: 
+Programų darbo laikai dirbant su skirtingo tipo konteineriais: 
 ![Vector](https://user-images.githubusercontent.com/92882227/161440258-af5a97ef-8df0-4480-a228-86c065c10f87.PNG)
 ![List](https://user-images.githubusercontent.com/92882227/161440263-075b7716-d7c4-4fc7-9864-44f3d9b30514.PNG)
 ![Deque](https://user-images.githubusercontent.com/92882227/161440265-4bb74bc7-d0ee-44ba-8a05-d0ff1cd6fe40.PNG)
