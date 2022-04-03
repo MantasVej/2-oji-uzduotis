@@ -8,7 +8,7 @@ void Studentai(list<Mokinys>& mas) {
     bool check; //kintamasis skirtas tikrinti duomenu ivesciai
     char duom;
     char stud;
-    string failas = "studentai10.txt"; //default duomenu failas
+    string failas;
     list<Mokinys>::iterator it;
     do {
         cout << "Ar generuoti nauja studentu duomenu faila? (t/n)? "; cin >> duom;
@@ -44,8 +44,15 @@ void Studentai(list<Mokinys>& mas) {
                     cin.ignore(10000, '\n');
                     cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
                 };
-                Skaitymas(mas, n, failas);
-                Rusiavimas(mas, n, stud);
+                for (int i = 0; i < 5; i++) {
+                    int A[5] = { 1000, 10000, 100000, 1000000, 10000000 };
+                    n = A[i];
+                    failas = "studentai" + std::to_string(n) + ".txt";
+                    cout << "Vector su " << n << " studentu" << endl;
+                    Skaitymas(mas, n, failas);
+                    Rusiavimas(mas, n, stud);
+                    cout << endl;
+                }
             }
             else if (duom == 'n') {
                 it = mas.begin();
