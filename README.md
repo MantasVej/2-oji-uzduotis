@@ -38,5 +38,5 @@ Programų darbo laikai dirbant su skirtingo tipo kenteineriais:
 Testų metu naudoto kompiuterio parametrai: 
 1. 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz CPU
 2. 16GB RAM
-3. 500GB SSD
+3. Kingston 512GB SSD Solid State Drive NVMe PCle 3.0 x4
 
