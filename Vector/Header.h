@@ -5,10 +5,12 @@
 #include <iomanip>
 #include <ctime>
 #include <vector>
+#include <iterator>
 #include <chrono>
 #include <random>
 #include <sstream>
 #include <exception>
+#include <algorithm>
 #include "Struktura.h"
 
 using std::cout;
@@ -31,4 +33,5 @@ void Isvestis(Mokinys&, char);
 int Tarpai(string eil);
 void Skaitymas(vector<Mokinys>&, int&, string);
 void FailoGeneravimas(int, int, string&);
-void Rusiavimas(vector<Mokinys>&, int, char);
+void Rusiavimas(vector<Mokinys>&, int);
+void Galutinis(vector<Mokinys>&, char);
