@@ -10,6 +10,7 @@
 #include <random>
 #include <sstream>
 #include <exception>
+#include <algorithm>
 #include "Struktura.h"
 
 using std::cout;
@@ -32,4 +33,5 @@ void Isvestis(Mokinys&, char);
 int Tarpai(string eil);
 void Skaitymas(list<Mokinys>&, int&, string);
 void FailoGeneravimas(int, int, string&);
-void Rusiavimas(list<Mokinys>&, int, char);
+void Rusiavimas(list<Mokinys>&, int);
+void Galutinis(list<Mokinys>&, char);

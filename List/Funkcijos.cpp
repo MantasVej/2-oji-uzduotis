@@ -44,14 +44,15 @@ void Studentai(list<Mokinys>& mas) {
                     cin.ignore(10000, '\n');
                     cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
                 };
-                for (int i = 0; i < 5; i++) {
-                    int A[5] = { 1000, 10000, 100000, 1000000, 10000000 };
-                    n = A[i];
-                    failas = "studentai" + std::to_string(n) + ".txt";
-                    cout << "Vector su " << n << " studentu" << endl;
-                    Skaitymas(mas, n, failas);
-                    Rusiavimas(mas, n, stud);
-                    cout << endl;
+                for(int i = 0; i < 5; i++){
+                int A[5] = {1000, 10000, 100000, 1000000, 10000000};
+                n = A[i];
+                failas = "studentai" + std::to_string(n) + ".txt";
+                cout << "List su " << n << " studentu" << endl;
+                Skaitymas(mas, n, failas);
+                Galutinis(mas, stud);
+                Rusiavimas(mas, n);
+                cout << endl;
                 }
             }
             else if (duom == 'n') {
@@ -86,6 +87,13 @@ void Studentai(list<Mokinys>& mas) {
             else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
         } while (!check);
 }
+void Galutinis(list<Mokinys>& temp, char galutinis)
+{
+    for(auto&s : temp){
+        if (galutinis == 'v') Vidurkis(s);
+        else Mediana(s);
+    }
+};
 //Skaiciuoja galutini pazymi pagal vidurki
 void Vidurkis(Mokinys& temp) {
     list<int>::iterator it;
@@ -183,7 +191,7 @@ void Isvestis(Mokinys& temp, char stud) {
     else Mediana(temp);
     cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
 }
-void Isvedimas(list<Mokinys>& mas, int n, string failas) {
+void Isvedimas(list<Mokinys>& mas, string failas) {
     std::ofstream fr(failas);
     std::stringstream my_buffer;
     list<Mokinys>::iterator it = mas.begin();
@@ -239,6 +247,7 @@ void Skaitymas(list<Mokinys>& mas, int& i, string failas) {
                     s >> paz;
                     it->v.push_back(paz);
                 }
+                it->v.resize(n);
                 s >> it->egzaminas;
                 it->n = n;
                 mas.push_back(Mokinys());
@@ -248,6 +257,7 @@ void Skaitymas(list<Mokinys>& mas, int& i, string failas) {
         }
         else break;
     }
+    mas.resize(i);
     std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now()-start;
     cout << "Failo duomenu nuskaitymas uztruko: "<< diff.count() << " s\n";
 }
@@ -274,32 +284,33 @@ void FailoGeneravimas(int n, int paz, string & failas) {
     cout << "Failo kurimas ir uzdarymas uztruko: "<< diff.count() << " s\n";
     my_buffer.clear();
 }
-void Rusiavimas(list<Mokinys>& mas, int n, char galutinis)
+bool Palyginti(Mokinys a, Mokinys b) {
+    return a.galutinis < b.galutinis;
+}
+void Rusiavimas(list<Mokinys>& mas, int n)
 {
     list<Mokinys>::iterator it;
     string failas1 = "vargsiukai" + std::to_string(n) + ".txt";
     string failas2 = "galvociai" + std::to_string(n) + ".txt";
-    int varn = 0, galn = 0; // vargsiuku, galvociu skaicius
     list<Mokinys> vargsiukai;
     list<Mokinys> galvociai;
     auto start = std::chrono::high_resolution_clock::now(); auto st=start;
-    for(it = mas.begin(); it != --mas.end(); it++) {
-        if (galutinis == 'v') Vidurkis(*it);
-        else Mediana(*it);
-        if (it->galutinis < 5) { 
-        vargsiukai.push_back(*it); 
-        varn++;
+    mas.sort(Palyginti);
+    it = mas.begin();
+    for(auto&s : mas){
+        if (s.galutinis < 5) {
+        vargsiukai.push_back(s);
+        ++it;
         }
-        else {
-            galvociai.push_back(*it); 
-            galn++;
-        }
+        else break;
     }
+    mas.erase(mas.begin(), it);
+    galvociai = mas;
     std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now()-start;
     cout << "Studentu rusiavimas i dvi grupes uztruko: "<< diff.count() << " s\n";
     start = std::chrono::high_resolution_clock::now(); st = start;
-    Isvedimas(vargsiukai, varn, failas1);
-    Isvedimas(galvociai, galn, failas2);
+    Isvedimas(vargsiukai, failas1);
+    Isvedimas(galvociai, failas2);
      diff = std::chrono::high_resolution_clock::now()-start;
      cout << "Surusiuotu failu isvedimas uztruko: "<< diff.count() << " s\n";
 }
