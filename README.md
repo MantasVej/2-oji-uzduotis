@@ -31,9 +31,10 @@ Programos versija v0.5
 1. Šioje versijoje yra 3 programos, kurios studentų duomenis saugo vector, list ir deque tipo konteineriuose.
 
 Programų darbo laikai dirbant su skirtingo tipo konteineriais: 
-![Vector](https://user-images.githubusercontent.com/92882227/161440258-af5a97ef-8df0-4480-a228-86c065c10f87.PNG)
-![List](https://user-images.githubusercontent.com/92882227/161440263-075b7716-d7c4-4fc7-9864-44f3d9b30514.PNG)
-![Deque](https://user-images.githubusercontent.com/92882227/161440265-4bb74bc7-d0ee-44ba-8a05-d0ff1cd6fe40.PNG)
+![Vector](https://user-images.githubusercontent.com/92882227/163442668-dc3ef4ed-b841-40a9-a719-620fbbcf31f5.PNG)
+![List](https://user-images.githubusercontent.com/92882227/163442676-5c840900-c091-4409-afa6-a5cdaf5cf721.PNG)
+![Deque](https://user-images.githubusercontent.com/92882227/163442864-7a842eee-b67b-4dd7-9114-1901b0284b45.PNG)
+(Visuose failuose studentai turi po 5 pažymius)
 
 Testų metu naudoto kompiuterio parametrai: 
 1. 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz CPU
