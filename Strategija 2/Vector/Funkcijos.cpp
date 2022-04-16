@@ -278,6 +278,7 @@ void Rusiavimas(vector<Mokinys>& mas, int n)
     auto start = std::chrono::high_resolution_clock::now(); auto st = start;
     std::sort(mas.begin(), mas.end(), Palyginti);
     it = mas.begin();
+    
     for (auto& s : mas) {
         if (s.galutinis < 5) {
             vargsiukai.push_back(s);

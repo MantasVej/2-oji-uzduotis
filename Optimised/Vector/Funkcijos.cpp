@@ -2,13 +2,13 @@
 #include "Struktura.h"
 
 void Studentai(vector<Mokinys>& mas) {
+    string failas = "studentai1000000.txt"; // Duomenu failo pavadinimas
     int n = 1;
     int paz;
     int s;
-    bool check; //kintamasis skirtas tikrinti duomenu ivesciai
+    bool check;
     char duom;
     char stud;
-    string failas;
     do {
         cout << "Ar generuoti nauja studentu duomenu faila? (t/n)? "; cin >> duom;
         check = 1;
@@ -43,16 +43,9 @@ void Studentai(vector<Mokinys>& mas) {
                     cin.ignore(10000, '\n');
                     cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
                 };
-                for(int i = 0; i < 5; i++){
-                int A[5] = {1000, 10000, 100000, 1000000, 10000000};
-                n = A[i];
-                failas = "studentai" + std::to_string(n) + ".txt";
-                cout << "Vector su " << n << " studentu" << endl;
                 Skaitymas(mas, n, failas);
                 Galutinis(mas, stud);
                 Rusiavimas(mas, n);
-                cout << endl;
-                }
             }
             else if (duom == 'n') {
                 for (int i = 0; i < n; i++) {
@@ -97,7 +90,6 @@ void Vidurkis(Mokinys& temp) {
     double sum = 0; //pazymiu suma
     for (int i = 0; i < temp.n; i++) sum += temp.v[i];
     temp.galutinis = 0.4 * (sum / (temp.n)) + 0.6 * temp.egzaminas;
-   // cout << temp.galutinis << endl;
 };
 //Skaiciuoja galutini pazymi pagal mediana
 void Mediana(Mokinys& temp) {
