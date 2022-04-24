@@ -88,18 +88,18 @@ void Galutinis(vector<Mokinys>& temp, char galutinis)
 //Skaiciuoja galutini pazymi pagal vidurki
 void Vidurkis(Mokinys& temp) {
     double sum = 0; //pazymiu suma
-    for (int i = 0; i < temp.n; i++) sum += temp.v[i];
-    temp.galutinis = 0.4 * (sum / (temp.n)) + 0.6 * temp.egzaminas;
+    for (int i = 0; i < temp.getn(); i++) sum += temp.getv(i);
+    temp.setgalutinis(0.4 * (sum / (temp.getn())) + 0.6 * temp.getegzaminas());
 };
 //Skaiciuoja galutini pazymi pagal mediana
 void Mediana(Mokinys& temp) {
-    int n = temp.n;
+    int n = temp.getn();
     double mediana = 0; //pazymiu mediana
     for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++) if (temp.v[i] > temp.v[j]) std::swap(temp.v[i], temp.v[j]);
-    if ((n % 2) == 0) mediana = (temp.v[n / 2] + temp.v[(n / 2) - 1]) / 2.0;
-    else mediana = temp.v[n / 2];
-    temp.galutinis = 0.4 * mediana + 0.6 * temp.egzaminas;
+        for (int j = i + 1; j < n; j++) if (temp.getv(i) > temp.getv(j)) temp.swapv(i, j);
+    if ((n % 2) == 0) mediana = (temp.getv(n / 2) + temp.getv((n / 2) - 1)) / 2.0;
+    else mediana = temp.getv(n / 2);
+    temp.setgalutinis(0.4 * mediana + 0.6 * temp.getegzaminas());
 };
 //Atsitiktinai generuoja pazymi nuo 1 iki 10
 int Generavimas() {
@@ -114,33 +114,35 @@ void Ivestis(Mokinys& temp) {
     char gen;
     bool check;
     int skaicius;
-    cout << "Iveskite studento varda: "; cin >> temp.vardas;
-    cout << "Iveskite studento pavarde: "; cin >> temp.pavarde;
+    string vardas, pavarde;
+    int egzaminas;
+    cout << "Iveskite studento varda: "; cin >> vardas; temp.setvardas(vardas);
+    cout << "Iveskite studento pavarde: "; cin >> pavarde; temp.setpavarde(pavarde);
     do {
         do {
-            cout << "Ar " << temp.n + 1 << " studento pazymi generuoti atsitiktinai (t/n)? "; cin >> gen;
+            cout << "Ar " << temp.getn() + 1 << " studento pazymi generuoti atsitiktinai (t/n)? "; cin >> gen;
             check = 1;
             if (gen == 'n') {
-                cout << "Iveskite " << temp.n + 1 << "-a pazymi: ";
+                cout << "Iveskite " << temp.getn() + 1 << "-a pazymi: ";
                 while (!(cin >> skaicius)) {
                     cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
                     cin.clear();
                     cin.ignore(10000, '\n');
-                    cout << "Iveskite " << temp.n + 1 << "-a pazymi: ";
+                    cout << "Iveskite " << temp.getn() + 1 << "-a pazymi: ";
                 };
-                temp.v.push_back(skaicius);
+                temp.pushv(skaicius);
             }
             else if (gen == 't') {
-                temp.v.push_back(Generavimas());
-                cout << temp.n + 1 << "-as pazymys yra " << temp.v[temp.n] << endl;
+                temp.pushv(Generavimas());
+                cout << temp.getn() + 1 << "-as pazymys yra " << temp.getv(temp.getn()) << endl;
             }
             else { cout << "Neteisinga ivestis. Bandykite dar karta " << endl; check = 0; }
         } while (!check);
         do {
             cout << "Ar dar yra pazymiu (t/n)? "; cin >> paz;
             check = 1;
-            if (paz == 'n') { temp.n++; break; }
-            else if (paz == 't') temp.n++;
+            if (paz == 'n') { temp.setn(temp.getn() + 1); break; }
+            else if (paz == 't') temp.setn(temp.getn()+1);
             else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
         } while (!check);
     } while (paz == 't');
@@ -149,16 +151,17 @@ void Ivestis(Mokinys& temp) {
         check = 1;
         if (gen == 'n') {
             cout << "Iveskite egzamino rezultata: ";
-            while (!(cin >> temp.egzaminas)) {
+            while (!(cin >> egzaminas)) {
                 cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
                 cin.clear();
                 cin.ignore(10000, '\n');
                 cout << "Iveskite egzamino rezultata: ";
             };
+            temp.setegzaminas(egzaminas);
         }
         else if (gen == 't') {
-            temp.egzaminas = Generavimas();
-            cout << "Egzamino pazymys yra " << temp.egzaminas << endl;
+            temp.setegzaminas(Generavimas());
+            cout << "Egzamino pazymys yra " << temp.getegzaminas() << endl;
         }
         else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
     } while (!check);
@@ -167,7 +170,7 @@ void Ivestis(Mokinys& temp) {
 void Isvestis(Mokinys& temp, char stud) {
     if (stud == 'v') Vidurkis(temp);
     else Mediana(temp);
-    cout << left << setw(15) << temp.vardas << left << setw(15) << temp.pavarde << std::fixed << std::setprecision(2) << left << setw(15) << temp.galutinis << endl;
+    cout << left << setw(15) << temp.getvardas() << left << setw(15) << temp.getpavarde() << std::fixed << std::setprecision(2) << left << setw(15) << temp.getgalutinis() << endl;
 }
 void Isvedimas(vector<Mokinys>& mas, string failas) {
     std::ofstream fr(failas);
@@ -175,7 +178,7 @@ void Isvedimas(vector<Mokinys>& mas, string failas) {
     my_buffer << "Vardas              Pavarde             Galutinis" << endl;
     my_buffer << "-------------------------------------------------" << endl;
     for (int i = 0; i < mas.size(); i++) {
-        my_buffer << left << setw(20) << mas[i].vardas << left << setw(20) << mas[i].pavarde << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].galutinis << "\n";
+        my_buffer << left << setw(20) << mas[i].getvardas() << left << setw(20) << mas[i].getpavarde() << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].getgalutinis() << "\n";
     };
     fr << my_buffer.str();
     fr.close();
@@ -208,6 +211,8 @@ void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
     bool sk = 1;
     int paz;
     int n = 0; //pazymiu skaicius
+    string vardas, pavarde;
+    int egzaminas;
     auto start = std::chrono::high_resolution_clock::now(); auto st=start;
     while (my_buffer) {
         if (!my_buffer.eof()) {
@@ -218,13 +223,16 @@ void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
             }
             else {
                 std::stringstream s(eil);
-                s >> mas[i].vardas >> mas[i].pavarde;
+                s >> vardas >> pavarde;
+                mas[i].setvardas(vardas);
+                mas[i].setpavarde(pavarde);
                 for (int j = 0; j < n; j++) {
                     s >> paz;
-                    mas[i].v.push_back(paz);
+                    mas[i].pushv(paz);
                 }
-                s >> mas[i].egzaminas;
-                mas[i].n = n;
+                s >> egzaminas;
+                mas[i].setegzaminas(egzaminas);
+                mas[i].setn(n);
                 mas.push_back(Mokinys());
                 i++;
             }
@@ -259,10 +267,13 @@ void FailoGeneravimas(int n, int paz, string & failas) {
     my_buffer.clear();
 }
 bool Palyginti(Mokinys a, Mokinys b) {
-    return a.galutinis < b.galutinis;
+    return a.getgalutinis() < b.getgalutinis();
 }
 bool Neislaikyta(Mokinys a) {
-    return a.galutinis < 5;
+    return a.getgalutinis() < 5;
+}
+bool Islaikyta(Mokinys a) {
+    return a.getgalutinis() >= 5;
 }
 void Rusiavimas(vector<Mokinys>& mas, int n)
 {
@@ -270,9 +281,9 @@ void Rusiavimas(vector<Mokinys>& mas, int n)
     string failas2 = "galvociai" + std::to_string(n) + ".txt";
     vector<Mokinys> vargsiukai;
     auto start = std::chrono::high_resolution_clock::now(); auto st = start;
-   // std::sort(mas.begin(), mas.end(), Palyginti);
-   // vector<Mokinys>::iterator it = std::find_if(mas.begin(), mas.end(), Neislaikyta);
-    vector<Mokinys>::iterator it = std::stable_partition(mas.begin(), mas.end(), Neislaikyta);
+    std::sort(mas.begin(), mas.end(), Palyginti);
+    vector<Mokinys>::iterator it = std::find_if(mas.begin(), mas.end(), Islaikyta);
+   // vector<Mokinys>::iterator it = std::stable_partition(mas.begin(), mas.end(), Neislaikyta);
     std::copy(mas.begin(), it, back_inserter(vargsiukai));
     mas.erase(mas.begin(), it);
 
