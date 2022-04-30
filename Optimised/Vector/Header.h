@@ -11,7 +11,7 @@
 #include <sstream>
 #include <exception>
 #include <algorithm>
-#include "Struktura.h"
+#include "Klase.h"
 
 using std::cout;
 using std::cin;

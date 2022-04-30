@@ -1,5 +1,5 @@
 source: Funkcijos.o
-	g++ -o source Source.cpp Funkcijos.o
+	g++ -O3 -o source Source.cpp Funkcijos.o
 funkcijos:
 	g++ -c Funkcijos.cpp
 clean:

@@ -1,8 +1,8 @@
 #include "Header.h"
-#include "Struktura.h"
+#include "Klase.h"
 
 void Studentai(vector<Mokinys>& mas) {
-    string failas = "studentai1000000.txt"; // Duomenu failo pavadinimas
+    string failas = "studentai10000000.txt"; // Duomenu failo pavadinimas
     int n = 1;
     int paz;
     int s;
@@ -224,15 +224,12 @@ void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
             else {
                 std::stringstream s(eil);
                 s >> vardas >> pavarde;
-                mas[i].setvardas(vardas);
-                mas[i].setpavarde(pavarde);
                 for (int j = 0; j < n; j++) {
                     s >> paz;
                     mas[i].pushv(paz);
                 }
                 s >> egzaminas;
-                mas[i].setegzaminas(egzaminas);
-                mas[i].setn(n);
+                mas[i].setstudentas(vardas, pavarde, egzaminas, n);
                 mas.push_back(Mokinys());
                 i++;
             }
@@ -283,7 +280,6 @@ void Rusiavimas(vector<Mokinys>& mas, int n)
     auto start = std::chrono::high_resolution_clock::now(); auto st = start;
     std::sort(mas.begin(), mas.end(), Palyginti);
     vector<Mokinys>::iterator it = std::find_if(mas.begin(), mas.end(), Islaikyta);
-   // vector<Mokinys>::iterator it = std::stable_partition(mas.begin(), mas.end(), Neislaikyta);
     std::copy(mas.begin(), it, back_inserter(vargsiukai));
     mas.erase(mas.begin(), it);
 

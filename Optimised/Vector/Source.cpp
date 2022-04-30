@@ -1,5 +1,5 @@
 #include "Header.h"
-#include "Struktura.h"
+#include "Klase.h"
 
 int main()
 {

@@ -13,9 +13,21 @@ private:
     int n;
     vector <int> v;
 public:
-    Mokinys() : egzaminas(0) { }  // default konstruktorius
+    Mokinys() {
+        vardas = "";
+        pavarde = "";
+        egzaminas = 0;
+        galutinis = 0;
+        n = 0;
+    }
 
     //set'eriai
+    void setstudentas(string a, string b, int c, int d) {
+        vardas = a;
+        pavarde = b;
+        egzaminas = c;
+        n = d;
+    }
     void setvardas(string a) {
         vardas = a;
     }
