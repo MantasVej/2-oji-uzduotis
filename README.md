@@ -73,3 +73,31 @@ Strategijų laikų palyginimas:
 (Visuose failuose studentai turi po 5 pažymius, o galutinis pažymis skaičiuojamas pagal vidurkį)
 
 Taikant bet kurią iš dviejų strategijų greičiausiai vis tiek dirba programa su vector tipo konteineriais. Visos realizacijos greičiau veikia naudojant 2 strategiją, tačiau žymiausias pokytis jaučiamas su list tipo konteineriu ~15s greičiau, kur vector ir deque suveikia mažiau negu 10s greičiau.
+
+Programos versija v1.1
+1. Struktūra pakeista į klasę.
+2. Atlikti testai:
+
+Su 1000000 studentų:
+
+![1000000](https://user-images.githubusercontent.com/92882227/166112466-550e4f4e-8951-4cd6-acd0-bb3a4a58bc64.PNG)
+
+Su 10000000 studentų:
+
+![10000000](https://user-images.githubusercontent.com/92882227/166112487-491f76cc-cc89-4493-8463-2c2e45534311.PNG)
+
+Make file su -O1 flag:
+
+![1](https://user-images.githubusercontent.com/92882227/166112518-23443090-32da-44c8-a842-90c403d069d1.PNG)
+
+Make file su -O2 flag:
+
+![2](https://user-images.githubusercontent.com/92882227/166112528-342c0bf0-4b39-4748-ae65-cbeb5adc6828.PNG)
+
+Make file su -O3 flag:
+
+![3](https://user-images.githubusercontent.com/92882227/166112551-419ecd61-49d2-43ce-991a-f1d5f7ecc29c.PNG)
+
+
+
+
