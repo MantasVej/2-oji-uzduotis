@@ -98,6 +98,8 @@ Make file su -O3 flag:
 
 ![3](https://user-images.githubusercontent.com/92882227/166112551-419ecd61-49d2-43ce-991a-f1d5f7ecc29c.PNG)
 
+Programos versija v1.2
 
+1. Programa realizuota pritaikant "Rule of three" principą.
 
 
