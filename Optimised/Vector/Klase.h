@@ -21,6 +21,28 @@ public:
         n = 0;
     }
 
+    //destruktorius
+    ~Mokinys() {}
+
+    //copy konstruktorius
+    Mokinys(const Mokinys& m) : vardas(m.vardas), pavarde(m.pavarde), egzaminas(m.egzaminas), galutinis(m.galutinis), n(m.n), v(m.v) {}
+
+    //copy priskyrimo operatorius
+    Mokinys& operator=(Mokinys m) {
+        swap(m);
+        return *this;
+    }
+    void swap(Mokinys& m)
+    {
+        using std::swap;
+        swap(vardas, m.vardas);
+        swap(pavarde, m.pavarde);
+        swap(egzaminas, m.egzaminas);
+        swap(galutinis, m.galutinis);
+        swap(n, m.n);
+        swap(v, m.v);
+    }
+
     //set'eriai
     void setstudentas(string a, string b, int c, int d) {
         vardas = a;

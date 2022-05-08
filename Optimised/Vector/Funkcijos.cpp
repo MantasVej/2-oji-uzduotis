@@ -2,7 +2,7 @@
 #include "Klase.h"
 
 void Studentai(vector<Mokinys>& mas) {
-    string failas = "studentai10000000.txt"; // Duomenu failo pavadinimas
+    string failas = "studentai1000000.txt"; // Duomenu failo pavadinimas
     int n = 1;
     int paz;
     int s;
