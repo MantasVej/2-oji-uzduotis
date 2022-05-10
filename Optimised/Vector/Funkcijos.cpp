@@ -178,7 +178,7 @@ void Isvedimas(vector<Mokinys>& mas, string failas) {
     my_buffer << "Vardas              Pavarde             Galutinis" << endl;
     my_buffer << "-------------------------------------------------" << endl;
     for (int i = 0; i < mas.size(); i++) {
-        my_buffer << left << setw(20) << mas[i].getvardas() << left << setw(20) << mas[i].getpavarde() << std::fixed << std::setprecision(2) << left << setw(20) << mas[i].getgalutinis() << "\n";
+        my_buffer << mas[i];
     };
     fr << my_buffer.str();
     fr.close();

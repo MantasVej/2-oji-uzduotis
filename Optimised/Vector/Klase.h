@@ -2,6 +2,8 @@
 
 using std::string;
 using std::vector;
+using std::left;
+using std::setw;
 
 class Mokinys
 {
@@ -22,25 +24,37 @@ public:
     }
 
     //destruktorius
-    ~Mokinys() {}
+    ~Mokinys() {
+        v.clear();
+    }
 
     //copy konstruktorius
-    Mokinys(const Mokinys& m) : vardas(m.vardas), pavarde(m.pavarde), egzaminas(m.egzaminas), galutinis(m.galutinis), n(m.n), v(m.v) {}
+    Mokinys(const Mokinys& m){
+        vardas = m.vardas;
+        pavarde = m.pavarde;
+        egzaminas = m.egzaminas;
+        galutinis = m.galutinis;
+        n = m.n;
+        v = m.v;
+    }
 
     //copy priskyrimo operatorius
-    Mokinys& operator=(Mokinys m) {
-        swap(m);
+    Mokinys& operator=(const Mokinys& m) {
+        if (this == &m) {
+            return *this;
+        }
+        vardas = m.vardas;
+        pavarde = m.pavarde;
+        egzaminas = m.egzaminas;
+        galutinis = m.galutinis;
+        n = m.n;
+        v = m.v;
         return *this;
     }
-    void swap(Mokinys& m)
-    {
-        using std::swap;
-        swap(vardas, m.vardas);
-        swap(pavarde, m.pavarde);
-        swap(egzaminas, m.egzaminas);
-        swap(galutinis, m.galutinis);
-        swap(n, m.n);
-        swap(v, m.v);
+
+    friend std::ostream& operator<<(std::ostream& stream, const Mokinys& m) {
+        stream << left << setw(20) << m.vardas << left << setw(20) << m.pavarde << std::fixed << std::setprecision(2) << left << setw(20) << m.galutinis << "\n";
+        return stream;
     }
 
     //set'eriai
