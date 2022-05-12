@@ -103,4 +103,8 @@ Programos versija v1.2
 1. Programa realizuota pritaikant "Rule of three" principą.
 2. Realizuotas išvesties operatoriaus << perdengimas.
 
+Programos versija v1.5
+
+1. Sukurta abstrakčioji bazinė klasė "Žmogus".
+2. Klasė "Mokinys" dabar yra derived iš bazinės klasės.
 
