@@ -5,11 +5,28 @@ using std::vector;
 using std::left;
 using std::setw;
 
-class Mokinys
+class Zmogus
 {
-private:
+protected:
     string vardas;
     string pavarde;
+
+public:
+    Zmogus(): vardas(""), pavarde("") {}
+
+    inline string getvardas() {
+        return vardas;
+    }
+    inline string getpavarde() {
+        return pavarde;
+    }
+
+    virtual void setvardas(string a) = 0;
+    virtual void setpavarde(string a) = 0;
+};
+class Mokinys : Zmogus
+{
+private:
     int egzaminas;
     double galutinis;
     int n;
