@@ -101,6 +101,5 @@ Make file su -O3 flag:
 Programos versija v1.2
 
 1. Programa realizuota pritaikant "Rule of three" principą.
-2. Realizuotas išvesties operatoriaus << perdengimas.
 
 
