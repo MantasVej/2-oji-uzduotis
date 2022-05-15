@@ -1,8 +1,11 @@
-#include "Header.h"
+﻿#include "Header.h"
 #include "Klase.h"
 
+/**
+* Skaitomi ir tikrinami vartotojo įvedami duomenys
+*/
 void Studentai(vector<Mokinys>& mas) {
-    string failas = "studentai1000000.txt"; // Duomenu failo pavadinimas
+    string failas;
     int n = 1;
     int paz;
     int s;
@@ -36,6 +39,7 @@ void Studentai(vector<Mokinys>& mas) {
             cout << "Ar studentu duomenis skaityti is failo (t/n)? "; cin >> duom;
             check = 1;
             if (duom == 't') {
+                cout << "Iveskite duomenu faila: "; cin >> failas;
                 cout << "Galutini rezultata pateikti pagal vidurki/mediana (v/m)? "; cin >> stud;
                 while ((stud != 'v') && (stud != 'm')){
                     cout << "Neteisinga ivestis. Bandykite dar karta " << endl;
@@ -78,6 +82,9 @@ void Studentai(vector<Mokinys>& mas) {
             else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
         } while (!check);
 }
+/**
+* Skaičiuoja galutinį balą pagal vidurkį arba medianą
+*/
 void Galutinis(vector<Mokinys>& temp, char galutinis)
 {
     for(auto&s : temp){
@@ -85,13 +92,17 @@ void Galutinis(vector<Mokinys>& temp, char galutinis)
         else Mediana(s);
     }
 };
-//Skaiciuoja galutini pazymi pagal vidurki
+/**
+* Skaičiuoja pažymį pagal vidurkį
+*/
 void Vidurkis(Mokinys& temp) {
     double sum = 0; //pazymiu suma
     for (int i = 0; i < temp.getn(); i++) sum += temp.getv(i);
     temp.setgalutinis(0.4 * (sum / (temp.getn())) + 0.6 * temp.getegzaminas());
 };
-//Skaiciuoja galutini pazymi pagal mediana
+/**
+* Skaičiuoja pažymį pagal medianą
+*/
 void Mediana(Mokinys& temp) {
     int n = temp.getn();
     double mediana = 0; //pazymiu mediana
@@ -101,14 +112,18 @@ void Mediana(Mokinys& temp) {
     else mediana = temp.getv(n / 2);
     temp.setgalutinis(0.4 * mediana + 0.6 * temp.getegzaminas());
 };
-//Atsitiktinai generuoja pazymi nuo 1 iki 10
+/**
+* Atsitiktinai generuoja pažymį nuo 0 iki 10
+*/
 int Generavimas() {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, 10);
     return dist(mt);
 };
-//Skaito duomenis apie studenta
+/**
+* Skaito duomeni apie studentą
+*/
 void Ivestis(Mokinys& temp) {
     char paz;
     char gen;
@@ -166,12 +181,17 @@ void Ivestis(Mokinys& temp) {
         else { cout << "Neteisinga ivestis. Bandykite dar karta" << endl; check = 0; }
     } while (!check);
 }
-//Isveda rezultatus
+/**
+* Išveda rezultatus
+*/
 void Isvestis(Mokinys& temp, char stud) {
     if (stud == 'v') Vidurkis(temp);
     else Mediana(temp);
     cout << left << setw(15) << temp.getvardas() << left << setw(15) << temp.getpavarde() << std::fixed << std::setprecision(2) << left << setw(15) << temp.getgalutinis() << endl;
 }
+/**
+* Išveda rezultatus
+*/
 void Isvedimas(vector<Mokinys>& mas, string failas) {
     std::ofstream fr(failas);
     std::stringstream my_buffer;
@@ -183,7 +203,9 @@ void Isvedimas(vector<Mokinys>& mas, string failas) {
     fr << my_buffer.str();
     fr.close();
 }
-//Skaiciuoja kiek string eiluteje yra tarpu
+/**
+* Skaičiuoja kiek string eilutėje yra tarpų
+*/
 int Tarpai(string eil) {
     int tarpai = 0;
     for (int i = 0; eil[i] != '\0'; ++i)
@@ -193,6 +215,9 @@ int Tarpai(string eil) {
     }
     return tarpai;
 }
+/**
+* Skaito studentų duomenis
+*/
 void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
     i = 0; //studentu skaicius
 
@@ -213,7 +238,6 @@ void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
     int n = 0; //pazymiu skaicius
     string vardas, pavarde;
     int egzaminas;
-    auto start = std::chrono::high_resolution_clock::now(); auto st=start;
     while (my_buffer) {
         if (!my_buffer.eof()) {
             std::getline(my_buffer, eil);
@@ -237,15 +261,15 @@ void Skaitymas(vector<Mokinys>& mas, int& i, string failas) {
         else break;
     }
     mas.resize(i);
-    std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now()-start;
-    cout << "Failo duomenu nuskaitymas uztruko: "<< diff.count() << " s\n";
 }
+/**
+* Generuoja studentų duomenų failą
+*/
 void FailoGeneravimas(int n, int paz, string & failas) {
     mt19937 mt(static_cast<int>(hrClock::now().time_since_epoch().count()));
     int_distribution dist(0, 10);
 
     std::stringstream my_buffer;
-    auto start = std::chrono::high_resolution_clock::now(); auto st=start;
     my_buffer << left << setw(20) << "Vardas" << left << setw(20) << "Pavarde";
     for (int i = 0; i < paz; i++) my_buffer << "ND" << left << setw(6) << i + 1;
     my_buffer << "Egz." << endl;
@@ -259,35 +283,41 @@ void FailoGeneravimas(int n, int paz, string & failas) {
     std::ofstream fr(failas);
     fr << my_buffer.str();
     fr.close();
-    std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now()-start;
-    cout << "Failo kurimas ir uzdarymas uztruko: "<< diff.count() << " s\n";
     my_buffer.clear();
 }
+/**
+* Palygina studentus pagal galutinį balą
+*/
 bool Palyginti(Mokinys a, Mokinys b) {
     return a.getgalutinis() < b.getgalutinis();
 }
+/**
+* Patikrina ar studentas neišlaikė kurso
+*/
 bool Neislaikyta(Mokinys a) {
     return a.getgalutinis() < 5;
 }
+/**
+* Patikrina ar studentas išlaikė kursą
+*/
 bool Islaikyta(Mokinys a) {
     return a.getgalutinis() >= 5;
 }
+/**
+* Rūšiuoja studentus į du atskirus failus.
+* Studentai, kurie išlaikė kursą dedami į failą "galvociai.txt",
+* studentai, kurie neišlaikė kurso dedami į failą "vargsiukai.txt"
+*/
 void Rusiavimas(vector<Mokinys>& mas, int n)
 {
     string failas1 = "vargsiukai" + std::to_string(n) + ".txt";
     string failas2 = "galvociai" + std::to_string(n) + ".txt";
     vector<Mokinys> vargsiukai;
-    auto start = std::chrono::high_resolution_clock::now(); auto st = start;
     std::sort(mas.begin(), mas.end(), Palyginti);
     vector<Mokinys>::iterator it = std::find_if(mas.begin(), mas.end(), Islaikyta);
     std::copy(mas.begin(), it, back_inserter(vargsiukai));
     mas.erase(mas.begin(), it);
 
-    std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now()-start;
-    cout << "Studentu rusiavimas i dvi grupes uztruko: "<< diff.count() << " s\n";
-    start = std::chrono::high_resolution_clock::now(); st = start;
     Isvedimas(vargsiukai, failas1);
     Isvedimas(mas, failas2);
-     diff = std::chrono::high_resolution_clock::now()-start;
-     cout << "Surusiuotu failu isvedimas uztruko: "<< diff.count() << " s\n";
 }
