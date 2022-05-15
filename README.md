@@ -1,12 +1,13 @@
 # 1-oji užduotis
-Programos naudojimo instrukcija:
-1. Per komandinę eilutę (terminalą) atidaromas programos aplankas (Optimised/Vector).
-2. Į terminalą suvedama komanda "Make", kuri sukuria programos paleidžiamąjį failą.
-3. Suvedus komandą "./source" bus paleidžiama programa.
+Programos diegimo ir naudojimo instrukcija:
+
+1. Atveriamas projekto aplnkas ir paleidžiamas failas "Studentai.msi".
+2. Pasirenkamas programos diegimo aplankas.
+3. Atidaromas įdiegtos programos aplankas ir paleidžiamas failas "Laboratorinis2.exe".
 4. Norint generuoti naują duomenų failą rašomas simbolis "t", kitu atveju rašoma "n".
 5. Pasirinkus generuoti naują duomenų failą reikės įvesti mokinių skaičių ir pažymių kiekį.
 6. Norint skaityti duomenis iš failo rašomas simbolis "t", o norint suvesti duomenis ranka rašoma "n". 
-7. Pasirinkus skaityti duomenis iš failo, bus skaitomas naujai sugeneruotas failas arba, jei naujas failas nebuvo generuojamas, reikia nustatyti failą iš kurio bus skaitomi duomenys. Nustatyti iš kokio failo bus skaitomi duomenys, dar prieš sukuriant programos paleidžiamąjį failą reikia atverti failą "funkcijos.cpp" ir pakeisti string tipo kintamojo "failas" reikšmę, priešingu atveju bus skaitomas default failas "studentai1000000.txt", o jei tokio failo aplanke nėra, programa baigs darbą.
+7. Pasirinkus skaityti duomenis iš failo, reikės įvesti failo duomenų failo pavadinimą, o jei tokio failo aplanke nėra, programa baigs darbą.
 8. Pasirinkus skaityti duomenis iš failo reikės pasirinkti galutinį pažymį skaičiuoti pagal vidurkį (įvedus "v") arba medianą (įvedus "m"). Programos rezultatai išvedami į rezultatų failius "galvociai.txt" ir "vargsiukai.txt".
 9. Pasirinkus duomenis suvesti ranka reikės įvesti kiekvieno studento vardą, pavardę, pažymius ir egzamino rezultatą.
 10. Baigus suvesti visus studentus reikės reikės pasirinkti galutinį pažymį skaičiuoti pagal vidurkį (įvedus "v") arba medianą (įvedus "m'). Programos rezultatai išvedami į ekraną.
@@ -108,3 +109,6 @@ Programos versija v1.5
 1. Sukurta abstrakčioji bazinė klasė "Žmogus".
 2. Klasė "Mokinys" dabar yra derived iš bazinės klasės.
 
+Programos versija v2.0
+1. Parengta programos dokumentacija.
+2. Sukurtas programos įdiegimo failas "Studentai.msi".
